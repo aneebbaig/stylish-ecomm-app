@@ -86,7 +86,7 @@ fun BottomButtons(navController: NavController) {
             text = "Get Started",
             modifier = Modifier.fillMaxWidth()
         )
-        CustomTextButton(onClick = { /*TODO*/ }, text = "I already have an account")
+      //  CustomTextButton(onClick = { /*TODO*/ }, text = "I already have an account")
     }
 }
 

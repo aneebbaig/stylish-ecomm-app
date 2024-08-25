@@ -20,7 +20,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl("https://fakestoreapi.com/products/")
+        return Retrofit.Builder().baseUrl("http://10.0.2.2:8000/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

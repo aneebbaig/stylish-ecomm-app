@@ -13,6 +13,9 @@ sealed class AppRoutes {
     object Register
 
     @Serializable
+    object ForgotPassword
+
+    @Serializable
     object Home
 
     @Serializable

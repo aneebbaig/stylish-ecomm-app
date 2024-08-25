@@ -12,21 +12,26 @@ val Pink40 = Color(0xFF7D5260)
 
 
 val TextBlackColor = Color(0xFF202020)
-val PrimaryBlueColor = Color(0xFF004CFF)
+val PrimaryColor = Color(0xFF8E6CEF)
 val LightBackgroundWhiteColor = Color(0xFFFFFFFF)
+val ErrorColor = Color(0xFFED4337)
 
 //Text Field
-val FieldBgColor = Color(0xFFF8F8F8)
-val FieldHintColor = Color(0xFFD2D2D2)
-val FieldTextColor = Color(0xFF202020)
+val FieldBgColor = Color(0xFFF4F4F4)
+val FieldHintColor = Color(0xFF272727).copy(alpha = 0.5f)
+val FieldTextColor = Color(0xFF272727).copy(alpha = 0.5f)
 
 //Nav Bar
 val NavBarColor = Color(0xFFFFFFFF)
-val NavBarItemColor = Color(0xFF000000)
+val NavBarItemColor = Color(0xFFFFFFFF)
 
 //Top Bar
 val TopBarColor = Color(0xFFFFFBFE)
 val TopBarContentColor = Color(0xFF000000)
+
+//Button
+val BtnSecondaryColor = Color(0xFFF4F4F4)
+
 
 
 

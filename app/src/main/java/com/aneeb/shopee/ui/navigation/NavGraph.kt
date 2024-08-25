@@ -7,7 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aneeb.shopee.ui.screens.SplashScreen
+import com.aneeb.shopee.ui.screens.auth.ForgotPassword
 import com.aneeb.shopee.ui.screens.auth.LoginScreen
+import com.aneeb.shopee.ui.screens.auth.RegisterScreen
 import com.aneeb.shopee.ui.screens.cart.CartScreen
 import com.aneeb.shopee.ui.screens.favorites.FavoritesScreen
 import com.aneeb.shopee.ui.screens.home.HomeScreen
@@ -17,17 +19,27 @@ import kotlinx.serialization.Serializable
 @Composable
 fun NavGraph(navController: NavHostController) {
 
-    NavHost(navController = navController, startDestination = AppRoutes.Home) {
+    NavHost(navController = navController, startDestination = AppRoutes.Login) {
         composable<AppRoutes.Splash> {
             SplashScreen(navController)
         }
 
         composable<AppRoutes.Login> {
-            LoginScreen()
+            LoginScreen(
+                navController
+            )
         }
 
         composable<AppRoutes.Register> {
+            RegisterScreen(
+                navController
+            )
+        }
 
+        composable<AppRoutes.ForgotPassword> {
+            ForgotPassword(
+                navController
+            )
         }
 
         composable<AppRoutes.Home> {

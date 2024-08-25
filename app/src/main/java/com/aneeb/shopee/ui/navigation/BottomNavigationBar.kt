@@ -1,25 +1,15 @@
 package com.aneeb.shopee.ui.navigation
 
-import CustomText
-import android.provider.CalendarContract.Colors
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -27,7 +17,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.aneeb.shopee.ui.theme.NavBarColor
 import com.aneeb.shopee.ui.theme.NavBarItemColor
-import com.aneeb.shopee.ui.theme.PrimaryBlueColor
 
 
 @Composable
@@ -60,12 +49,13 @@ fun BottomNavigationBar(navController: NavController) {
                     }
                 },
                 icon = {
-                    Icon(
-                        painter = painterResource(id = screen.icon),
+                    Image(
+                        painter = painterResource(id = if (isSelected) screen.selectedIcon else screen.icon),
                         contentDescription = screen.title,
                         modifier = Modifier.size(30.dp),
                     )
                 },
+
 
                 selectedContentColor = MaterialTheme.colorScheme.primary,
                 unselectedContentColor = MaterialTheme.colorScheme.onBackground

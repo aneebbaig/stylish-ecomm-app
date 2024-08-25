@@ -2,9 +2,6 @@ package com.aneeb.shopee.ui.screens.auth
 
 import CustomText
 import android.graphics.drawable.shapes.Shape
-import android.util.Log
-import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,23 +11,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -52,19 +43,14 @@ import com.aneeb.shopee.ui.theme.BtnSecondaryColor
 import com.aneeb.shopee.ui.theme.TextBlackColor
 
 @Composable
-fun LoginScreen(navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
-
-    val context = LocalContext.current
-    val isLoading by authViewModel.isLoading
-    val loginState by authViewModel.loginState.collectAsState()
-
+fun RegisterScreen(navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
 
     val annotatedText = buildAnnotatedString {
         withStyle(style = SpanStyle(fontWeight = FontWeight.Normal)) {
-            append("Don't have an account? ")
+            append("Already Have an account? ")
         }
         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-            append("Create One")
+            append("Login")
         }
 
     }
@@ -81,8 +67,28 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel = hil
 
 
                 CustomText(
-                    text = "Sign In",
+                    text = "Create Account",
                     style = MaterialTheme.typography.headlineLarge.copy(fontSize = 32.sp)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+
+
+                //FIRST NAME FIELD
+                CustomTextField(
+                    placeholder = "First Name",
+                    value = authViewModel.registerFirstName.value,
+                    onValueChange = { authViewModel.registerFirstName.value = it },
+                    errorString = authViewModel.registerFirstNameError.value,
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+
+
+                //LAST NAME FIELD
+                CustomTextField(
+                    placeholder = "Last Name",
+                    value = authViewModel.registerLastName.value,
+                    onValueChange = { authViewModel.registerLastName.value = it },
+                    errorString = authViewModel.registerLastNameError.value,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -90,29 +96,29 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel = hil
                 //EMAIL FIELD
                 CustomTextField(
                     placeholder = "Email",
-                    value = authViewModel.loginEmail.value,
-                    onValueChange = { authViewModel.loginEmail.value = it },
-                    errorString = authViewModel.loginEmailError.value
+                    value = authViewModel.registerEmail.value,
+                    onValueChange = { authViewModel.registerEmail.value = it },
+                    errorString = authViewModel.registerEmailError.value,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
 
                 //PASS FIELD
                 CustomTextField(
                     placeholder = "Password",
-                    value = authViewModel.loginPassword.value,
-                    onValueChange = { authViewModel.loginPassword.value = it },
-                    errorString = authViewModel.loginPasswordError.value
+                    value = authViewModel.registerPassword.value,
+                    onValueChange = { authViewModel.registerPassword.value = it },
+                    errorString = authViewModel.registerPasswordError.value,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
 
 
-                CustomButton(text = "Continue", onClick = { authViewModel.login() })
+                CustomButton(text = "Continue", onClick = { authViewModel.register() })
 
 
                 CustomTextButton(
                     text = annotatedText,
                     onClick = {
-                        navController.navigate(AppRoutes.Register) {
+                        navController.navigate(AppRoutes.Login) {
                             popUpTo(navController.graph.startDestinationId) {
                                 inclusive = true
                             }
@@ -125,55 +131,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel = hil
                 Spacer(modifier = Modifier.height(60.dp))
 
 
-                //SOCIAL BUTTONS
-                CustomButton(
-                    text = "Continue With Apple",
-                    onClick = { /*TODO*/ },
-                    backgroundColor = BtnSecondaryColor,
-                    contentColor = TextBlackColor,
-                    prefixIcon = R.drawable.apple,
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                CustomButton(
-                    text = "Continue With Google",
-                    onClick = { /*TODO*/ },
-                    backgroundColor = BtnSecondaryColor,
-                    contentColor = TextBlackColor,
-                    prefixIcon = R.drawable.google,
-                )
-
-
-            }
-        }
-    }
-
-    if (isLoading) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.5f)),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator(color = Color.White)
-        }
-    }
-
-    LaunchedEffect(loginState) {
-        loginState?.let {
-            if (it.isSuccess) {
-                // Do something on success, like navigate to another screen
-            } else {
-                Toast.makeText(
-                    context,
-                    it.exceptionOrNull()?.message ?: "Unknown error",
-                    Toast.LENGTH_LONG
-                ).show()
             }
         }
     }
 }
-
-// Handle login result
-
-
-

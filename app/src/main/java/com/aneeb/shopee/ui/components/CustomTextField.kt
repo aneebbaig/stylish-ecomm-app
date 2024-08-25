@@ -2,63 +2,81 @@ package com.aneeb.shopee.ui.components
 
 import CustomText
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.aneeb.shopee.ui.theme.BtnCornerRadius
+import com.aneeb.shopee.ui.theme.ErrorColor
 import com.aneeb.shopee.ui.theme.FieldBgColor
 import com.aneeb.shopee.ui.theme.FieldCornerRadius
 import com.aneeb.shopee.ui.theme.FieldHintColor
 import com.aneeb.shopee.ui.theme.FieldTextColor
 
+
 @Composable
 fun CustomTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: TextFieldValue,
+    errorString: String? = null,
+    onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
-    textColor: Color = FieldTextColor,
+    textStyle: TextStyle = MaterialTheme.typography.labelSmall.copy(color = FieldTextColor),
     backgroundColor: Color = FieldBgColor,
-    cursorColor: Color = FieldTextColor,
     placeholderColor: Color = FieldHintColor,
-    cornerRadius: Dp = FieldCornerRadius,
-    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    singleLine: Boolean = true,
-    padding: Int = 8
+    cursorColor: Color = Color.Black,
+    cornerRadius: Dp = 4.dp
 ) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-
-        modifier = modifier
-            .background(backgroundColor, RoundedCornerShape(cornerRadius))
-            .padding(padding.dp).fillMaxWidth(),
-        placeholder = {
+    Column {
+        BasicTextField(
+            value = value,
+            onValueChange = { newValue ->
+                onValueChange(newValue)
+            },
+            textStyle = textStyle,
+            cursorBrush = SolidColor(cursorColor),
+            modifier = modifier
+                .background(
+                    color = backgroundColor,
+                    shape = RoundedCornerShape(cornerRadius)
+                )
+                .padding(horizontal = 15.dp, vertical = 20.dp),
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    if (value.text.isEmpty()) {
+                        Text(
+                            text = placeholder,
+                            style = textStyle.copy(color = placeholderColor)
+                        )
+                    }
+                    innerTextField()
+                }
+            }
+        )
+        if (errorString != null) {
+            Spacer(modifier = Modifier.height(10.dp))
             CustomText(
-                text = placeholder,
-                style = textStyle,
-                color = placeholderColor
+                text = errorString,
+                color = ErrorColor,
+                style = MaterialTheme.typography.bodySmall
             )
-        },
-        textStyle = textStyle.copy(color = textColor),
-        colors = TextFieldDefaults.colors(
-            cursorColor = cursorColor,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        ),
-        shape = RoundedCornerShape(cornerRadius),
-        visualTransformation = visualTransformation,
-        singleLine = singleLine
-    )
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+    }
 }

@@ -22,7 +22,7 @@ fun CustomText(
     letterSpacing: TextUnit = 0.sp,
     lineHeight: TextUnit = TextUnit.Unspecified,
     style: TextStyle? = null,
-    padding: Int = 8,
+    padding: Int = 0,
     textAlign: TextAlign? = null,
 ) {
     Text(
